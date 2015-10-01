@@ -1,0 +1,29 @@
+<h1>Alberto Armienta's Wladder</h1>
+<br>
+<br>
+<br>
+<%= form_tag(answer_path, method: "get") do  %>
+  <%= @startWord %>
+  <br>
+  <%= label_tag(:answer1, "Step 1: ") %>
+  <%= text_field_tag(:answer1) %>
+  <br>
+  <%= label_tag(:answer2, "Step 2: ") %>
+  <%= text_field_tag(:answer2) %>
+  <br>
+  <%= label_tag(:answer3, "Step 3: ") %>
+  <%= text_field_tag(:answer3) %>
+  <br>
+  <%= label_tag(:answer4, "Step 4: ") %>
+  <%= text_field_tag(:answer4) %>
+  <br>
+  <%= label_tag(:answer5, "Step 5: ") %>
+  <%= text_field_tag(:answer5) %>
+  <br>
+  <%= @endWord %>
+  <br>
+  <%= hidden_field_tag(:startWord, @startWord) %>
+  <%= hidden_field_tag(:endWord, @endWord) %>
+  <%= submit_tag("Submit") %>
+<% end %>
+<br>

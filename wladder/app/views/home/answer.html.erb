@@ -1,0 +1,30 @@
+<h1>Wladder Answer page</h1>
+
+<%= link_to "Try Again?", root_path %>
+
+<h3>Your Guesses holmes</h3>
+<table border="1" >
+  <tr>
+    <td>Start:</td>
+    <td><%= params[:startWord] %></td>
+  </tr>
+<% @answersArray.each_index do |i| %>
+  <tr>
+    <td>Step <%= i + 1 %>:</td>
+    <td><%= @answersArray[i] %></td>
+  <tr>
+<%end%>
+  <tr>
+    <td>End:</td>
+    <td><%= params[:endWord] %></td>
+  </tr>
+<table>
+
+<h3>
+  <% if @correct %>
+    YOU WIN BUDDY!!!!!
+  <% else%>
+    YOU LOSE FRIEND!!!!
+  <% end %>
+
+</h3>
