@@ -1,0 +1,11 @@
+<h1><%= @topic.title%></h1>
+
+<p><%= @topic.description%></p>
+
+<table>
+  <% @topic.references.each do |ref| %>
+    <tr><%= ref.url %></tr>
+  <% end %>
+</table>
+
+<%= link_to 'All Topics', topics_path%>

@@ -1,0 +1,22 @@
+<h1>Topics</h1>
+
+<%= link_to 'New Topic', new_topic_path %>
+<table>
+  <thead>
+    <tr>
+      <th>Topic</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @topics.each do |topic| %>
+    <tr>
+      <td><strong><%= topic.title %></strong></td>
+      <td><%= topic.description %></td>
+      <td><%= link_to 'Show', topic %></td>
+      <td><%= link_to 'Delete', topic, method: :delete, data: {confirm: 'Do You really want to delete the Topic'} %></td>
+      <td><%= link_to 'Edit', edit_topic_path(topic) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
