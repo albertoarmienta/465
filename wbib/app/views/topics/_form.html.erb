@@ -3,8 +3,8 @@
     <div id="error_explanation">
       <h3><%= pluralize(@topic.errors.count, "error") %> did not allow for this topic to be saved:</h3>
       <ul>
-        <% @topic.error.full_messages.each do |text| %>
-          <li><%= message %><li>
+        <% @topic.errors.full_messages.each do |text| %>
+          <li><%= text %><li>
         <% end %>
       </ul>
     </div>

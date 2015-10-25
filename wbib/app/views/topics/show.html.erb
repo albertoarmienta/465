@@ -2,10 +2,25 @@
 
 <p><%= @topic.description%></p>
 
+<h4>Create a new URL</h4>
+<%= render 'references/form' %>
+<br>
+<br>
+<h3>List of all the URLS</h3>
+<hr>
 <table>
   <% @topic.references.each do |ref| %>
-    <tr><%= ref.url %></tr>
+    <% if !ref.new_record? %>
+      <tr>
+        <td><%= link_to("#{ref.url}", "#{ref.url}", :target=>'_blank')%></td>
+
+        <td><%= link_to 'Edit', edit_reference_path(ref) %></td>
+        <td><%= link_to 'Delete', ref, method: :delete, data: {confirm: 'Do You really want to delete the Reference'} %></td>
+      </tr>
+    <% end %>
   <% end %>
 </table>
 
+
+<hr>
 <%= link_to 'All Topics', topics_path%>

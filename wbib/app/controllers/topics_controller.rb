@@ -7,6 +7,7 @@ class TopicsController < ApplicationController
 
   # GET /topics/:id
   def show
+    @reference = @topic.references.new
   end
 
   # GET /topics/new
