@@ -1,6 +1,9 @@
-<h1><%= @topic.title%></h1>
+<h1>Topic:  <%= @topic.title%></h1>
 
+<h2>Description:</h2>
+<hr>
 <p><%= @topic.description%></p>
+<hr>
 
 <h4>Create a new URL</h4>
 <%= render 'references/form' %>
@@ -8,12 +11,18 @@
 <br>
 <h3>List of all the URLS</h3>
 <hr>
-<table>
+<table >
   <% @topic.references.each do |ref| %>
     <% if !ref.new_record? %>
       <tr>
-        <td><%= link_to("#{ref.url}", "#{ref.url}", :target=>'_blank')%></td>
+        <% url = ref.url %>
+        <% if !(url =~ /^http:\/\/.*/ || url =~ /^https:\/\/.*/)%>
+          <td><%= link_to("#{ref.url}", "http://#{ref.url}", :target=>'_blank')%></td>
+        <% else %>
+          <td><%= link_to("#{ref.url}", "#{ref.url}", :target=>'_blank')%></td>
+        <% end %>
 
+        <td><%= ref.created_at.localtime %></td>
         <td><%= link_to 'Edit', edit_reference_path(ref) %></td>
         <td><%= link_to 'Delete', ref, method: :delete, data: {confirm: 'Do You really want to delete the Reference'} %></td>
       </tr>
