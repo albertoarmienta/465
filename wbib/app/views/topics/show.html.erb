@@ -1,3 +1,5 @@
+<p id="notice"><%= notice %></p>
+
 <h1>Topic:  <%= @topic.title%></h1>
 
 <h2>Description:</h2>
@@ -17,7 +19,7 @@
       <tr>
         <% url = ref.url %>
         <% if !(url =~ /^http:\/\/.*/ || url =~ /^https:\/\/.*/)%>
-          <td><%= link_to("#{ref.url}", "http://#{ref.url}", :target=>'_blank')%></td>
+          <td><%= link_to("http://#{ref.url}", "http://#{ref.url}", :target=>'_blank')%></td>
         <% else %>
           <td><%= link_to("#{ref.url}", "#{ref.url}", :target=>'_blank')%></td>
         <% end %>

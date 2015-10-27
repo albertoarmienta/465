@@ -17,7 +17,7 @@ class ReferencesController < ApplicationController
       print "SAVED"
       redirect_to topic_url(@topic), notice: 'Reference Added'
     else
-      redirect_to topic_url(@topic), notice: 'Reference Added'
+      redirect_to topic_url(@topic), notice: 'Reference NOT added'
       print "NOPE"
       #render :new
     end
