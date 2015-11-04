@@ -1,0 +1,7 @@
+<h1>All Public images</h1>
+<hr>
+<% @images.each do |img| %>
+  <% if !img.isPrivate %>  
+    <%= image_tag root_url + '/images/' + img.filename, size:"100x100", alt: img.filename %>
+  <% end %>  
+<% end %>
