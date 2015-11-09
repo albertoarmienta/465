@@ -1,0 +1,26 @@
+<%= link_to 'Main Page', root_path %>
+<br>
+<div>Image Owner: <%= @imageOwner.name %></div>
+<div>private: <%= @thisImage.isPrivate %></div>
+  
+<% if !@thisImage.isPrivate || @hasPermission %>
+  <%= image_tag root_url + '/images/' + @thisImage.filename, size:"600x700", alt: @thisImage.filename %>
+<% end %>
+
+<% @thisImage.tags.each do |tag| %>
+  <% if !tag.new_record? %>
+    <div>"<%= tag.tag %>"</div>
+  <% end %>
+<% end %>
+<% if @isOwner %>
+  <%= render 'tags/form' %>
+  <br>
+  <%= form_for @thisImage do |t| %>
+    <%= t.hidden_field(:isPrivate, :value => !@thisImage.isPrivate) %>
+    <% if @thisImage.isPrivate %>
+      <%= t.submit "Make Public"%>
+    <% else %>
+      <%= t.submit "Make Private"%>
+    <% end %>
+  <% end %>
+<% end %>

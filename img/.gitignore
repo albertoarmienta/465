@@ -16,4 +16,8 @@
 !/log/.keep
 /tmp
 
+#ignore pics
 /public/images
+
+#ignore .swp files cause i lose connection alot so alot of
+*.swp

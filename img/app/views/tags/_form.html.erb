@@ -1,0 +1,24 @@
+<%= form_for([@thisImage, @tag]) do |f| %>
+  <% if @tag.errors.any? %>
+  <div id="error_explanation">
+  <h3><%= pluralize(@tag.errors.count, "error") %> did not allow for this topic to be saved:</h3>
+  <ul>
+    <% @tag.errors.full_messages.each do |text| %>
+      <li><%= text %><li>
+  <% end %>
+  </ul>
+</div>
+  <% end %>
+
+
+<div class="textBox">
+  <%= f.label "New Tag" %>
+  <%= f.text_field :tag %>
+</div>
+<br>
+
+<div class="button">
+  <%= f.submit %>
+</div>
+<% end %>
+
