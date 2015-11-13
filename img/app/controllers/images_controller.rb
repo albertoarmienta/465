@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
       @availableUsers.each do |usr|
         matchfound = false
         @thisImage.users.each do |iusr|
-          if usr.id == iusr.id
+          if usr.id == iusr.id || usr.id == current_user.id
             matchfound = true
           end
         end
@@ -61,6 +61,7 @@ class ImagesController < ApplicationController
       render :new
     end
   end
+
   def update
     @thisImage = Image.find(params[:id])
     if @thisImage.update(image_params)
@@ -68,6 +69,11 @@ class ImagesController < ApplicationController
     else
       redirect_to @thisImage, notice: 'Privacy NOT updated'
     end
+  end
+
+  def destroy
+    Image.find(params[:id]).destroy
+    redirect_to root_path
   end
 
   def toggle_private

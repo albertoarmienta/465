@@ -1,11 +1,8 @@
 class TagsController < ApplicationController
-  def index
-  end
 
-  def show
-  end
-
-  def new
+  def destroy
+    Tag.find(params[:id]).delete
+    redirect_to :back, notice: 'Tag Deleted'
   end
 
   def create

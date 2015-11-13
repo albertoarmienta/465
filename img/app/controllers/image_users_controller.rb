@@ -10,6 +10,10 @@ class ImageUsersController < ApplicationController
     end
   end
 
+  def destroy
+    ImageUser.find(params[:id]).destroy
+  end
+
   private 
 
   def image_user_params
