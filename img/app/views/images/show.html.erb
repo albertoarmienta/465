@@ -3,15 +3,20 @@
 <div>Image Owner: <%= @imageOwner.name %></div>
 <div>private: <%= @thisImage.isPrivate %></div>
   
-<% if !@thisImage.isPrivate || @hasPermission %>
-  <%= image_tag root_url + '/images/' + @thisImage.filename, size:"600x700", alt: @thisImage.filename %>
-<% end %>
-
+<table>
+  <tr>
+    <td>
 <% @thisImage.tags.each do |tag| %>
   <% if !tag.new_record? %>
     <div>"<%= tag.tag %>"</div>
   <% end %>
 <% end %>
+<% if !@thisImage.isPrivate || @hasPermission %>
+  <%= image_tag root_url + '/images/' + @thisImage.filename, size:"600x700", alt: @thisImage.filename %>
+<% end %>
+
+    </td>
+    <td>
 <% if @isOwner %>
   <%= render 'tags/form' %>
   <br>
@@ -23,4 +28,11 @@
       <%= t.submit "Make Private"%>
     <% end %>
   <% end %>
+  <br>
+  <% if @thisImage.isPrivate %>
+    <%= render 'image_users/form' %>
+  <% end %>
 <% end %>
+</td>
+</tr>
+</table>

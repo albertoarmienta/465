@@ -1,0 +1,26 @@
+<%= form_for([@thisImage, @newUser]) do |f| %>
+  <% if @newUser.errors.any? %>
+  <div id="error_explanation">
+  <h3><%= pluralize(@newUser.errors.count, "error") %> did not allow for this topic to be saved:</h3>
+  <ul>
+    <% @newUser.errors.full_messages.each do |text| %>
+      <li><%= text %><li>
+    <% end %>
+  </ul>
+</div>
+  <% end %>
+
+
+<div >
+  <%= f.select(:user_id, @formatedSelectorContents) %>
+  <% if false%>
+  <%=f.collection_select(:user_id, User.all, :id, :name) %>
+  <% end %>
+</div>
+<br>
+
+<div class="button">
+  <%= f.submit %>
+</div>
+<% end %>
+

@@ -24,7 +24,22 @@ class ImagesController < ApplicationController
     end
 
     if @isOwner
-      @tag = @thisImage.tags.new
+      @tag     = @thisImage.tags.new
+      @newUser = @thisImage.image_users.new
+      @availableUsers = User.all
+
+      @formatedSelectorContents = Hash.new
+      @availableUsers.each do |usr|
+        matchfound = false
+        @thisImage.users.each do |iusr|
+          if usr.id == iusr.id
+            matchfound = true
+          end
+        end
+        if !matchfound
+          @formatedSelectorContents.store("#{usr.name} (#{usr.email}) ", usr.id)
+        end
+      end
     end
   end
 
