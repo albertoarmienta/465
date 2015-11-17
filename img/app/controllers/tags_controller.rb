@@ -14,6 +14,19 @@ class TagsController < ApplicationController
       redirect_to image_url(@image), notice: 'Reference NOT Added'
     end
   end
+  def edit
+    @tag = Tag.find(params[:id])
+  end
+
+  def update
+    @tag = Tag.find(params[:id])
+    if @tag.update(tag_params)
+      redirect_to @tag.image, notice: 'Tag successfully updated'
+    else
+      render :edit
+    end
+
+  end
 
   private 
 

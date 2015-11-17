@@ -1,10 +1,21 @@
+<style>
+.image{
+  display: inline-block;
+  width: 100;
+  height: 150;
+}
+</style>
 <% if @hasUser %>  
   <h1>My Images</h1>
   <hr>
-  <div><%= current_user.name %></div>
-  <div><%= current_user.images.size%></div>
+  <h3><%= current_user.name %></h3>
+
   <% current_user.images.each do |img| %>
+    <div class="image">
       <%=link_to(image_tag(root_url + '/images/' + img.filename, size:"100x100", alt: img.filename), img) %>
+      <br>
+      <%= User.find(img.user_id).name %>
+    </div>
   <% end %>
 
   <div><%= link_to 'Add New Image', new_image_path %></div>
@@ -13,7 +24,11 @@
   <hr>
   <% current_user.image_users.each do |img| %>
       <% image = Image.find(img.image_id) %>
+    <div class="image">
       <%= link_to(image_tag( root_url + '/images/' + image.filename, size:"100x100", alt: image.filename), image) %>
+      <br>
+      <%= User.find(image.user_id).name %>
+    </div>
   <% end %>
 <% end %>  
 <h1>All Public Images</h1>
@@ -21,11 +36,19 @@
 <% @images.each do |img| %>
   <% if @hasUser %>  
     <% if !img.isPrivate && (current_user.id != img.user_id)%>  
-      <%=link_to(image_tag(root_url + '/images/' + img.filename, size:"100x100", alt: img.filename), img) %>
+      <div class="image">
+        <%=link_to(image_tag(root_url + '/images/' + img.filename, size:"100x100", alt: img.filename), img) %>
+        <br>
+        <%= User.find(img.user_id).name %>
+      </div>
     <% end %>  
   <% else %>
     <% if !img.isPrivate %>  
+    <div class="image">
       <%=link_to(image_tag(root_url + '/images/' + img.filename, size:"100x100", alt: img.filename), img) %>
+      <br>
+      <%= User.find(img.user_id).name %>
+    </div>
     <% end %>  
   <% end %>
 <% end %>

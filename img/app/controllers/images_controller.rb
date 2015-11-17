@@ -26,9 +26,11 @@ class ImagesController < ApplicationController
     if @isOwner
       @tag     = @thisImage.tags.new
       @newUser = @thisImage.image_users.new
-      @availableUsers = User.all
+      #@availableUsers = User.all 
+      @availableUsers = User.where.not(id: current_user.id)
 
       @formatedSelectorContents = Hash.new
+      @usersWhoHaveAccessContents = Hash.new
       @availableUsers.each do |usr|
         matchfound = false
         @thisImage.users.each do |iusr|
@@ -38,6 +40,8 @@ class ImagesController < ApplicationController
         end
         if !matchfound
           @formatedSelectorContents.store("#{usr.name} (#{usr.email}) ", usr.id)
+        else
+          @usersWhoHaveAccessContents.store("#{usr.name} (#{usr.email}) ", usr.id)
         end
       end
     end
@@ -52,6 +56,10 @@ class ImagesController < ApplicationController
     @image.filename = @image.generateFilename
     @image.user_id = current_user.id
     @uploaded_io = params[:image][:uploaded_file]
+    if @uploaded_io.nil?
+      render :new, notice: 'No file attached'
+      return
+    end
     File.open(Rails.root.join('public', 'images', @image.filename), 'wb') do |file|
       file.write(@uploaded_io.read)
     end

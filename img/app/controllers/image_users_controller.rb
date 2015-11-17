@@ -12,7 +12,18 @@ class ImageUsersController < ApplicationController
 
   def destroy
     ImageUser.find(params[:id]).destroy
+    redirect_to(:back)
   end
+  def removeImageUser
+    puts "fcuukkckk"
+    image = Image.find(params[:image_id])
+    imageUsers = image.image_users
+    imageUsers.each do |usr|
+      if usr.user_id == params[:image_user][:user_id]
+        ImageUser.find(usr.id).destroy
+      end
+    end
+  end 
 
   private 
 

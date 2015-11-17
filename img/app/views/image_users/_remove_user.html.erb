@@ -1,4 +1,4 @@
-<%= form_for([@thisImage, @newUser]) do |f| %>
+<%= form_for([@thisImage, @newUser], method: :destroy) do |f| %>
   <% if @newUser.errors.any? %>
   <div id="error_explanation">
   <h3><%= pluralize(@newUser.errors.count, "error") %> did not allow for this user to be added</h3>
@@ -12,12 +12,12 @@
 
 
 <div >
-  <%= f.select(:user_id, @formatedSelectorContents) %>
+  <%= f.select(:user_id, @usersWhoHaveAccessContents) %>
 </div>
 <br>
 
 <div class="button">
-  <%= f.submit %>
+  <%= f.submit "Remove User"%>
 </div>
 <% end %>
 

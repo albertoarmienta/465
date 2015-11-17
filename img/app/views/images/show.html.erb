@@ -1,40 +1,76 @@
+<br>
 <%= link_to 'Main Page', root_path %>
 <br>
-<div>Image Owner: <%= @imageOwner.name %></div>
-<div>private: <%= @thisImage.isPrivate %></div>
-  
+
 <table>
   <tr>
     <td>
-<% @thisImage.tags.each do |tag| %>
-  <% if !tag.new_record? %>
-    <div>"<%= tag.tag %>" <%= link_to 'Delete Tag', tag, method: :delete , data: {confirm: 'Do you really want to delete this tag?'}%></div>
-  <% end %>
-<% end %>
-<% if !@thisImage.isPrivate || @hasPermission %>
-  <%= image_tag root_url + '/images/' + @thisImage.filename, size:"600x700", alt: @thisImage.filename %>
-<% end %>
+      <h1>Image Owner: <%= @imageOwner.name %></h1>
+      <h3>Private:     <%= @thisImage.isPrivate %></h3>
+      <% if !@thisImage.isPrivate || @hasPermission %>
+        <%= image_tag root_url + '/images/' + @thisImage.filename, size:"600x700", alt: @thisImage.filename %>
+    <% end %>
 
     </td>
     <td>
-<% if @isOwner %>
-  <%= render 'tags/form' %>
-  <br>
-  <%= form_for @thisImage do |t| %>
-    <%= t.hidden_field(:isPrivate, :value => !@thisImage.isPrivate) %>
-    <% if @thisImage.isPrivate %>
-      <%= t.submit "Make Public"%>
-    <% else %>
-      <%= t.submit "Make Private"%>
-    <% end %>
-  <% end %>
-  <br>
-  <% if @thisImage.isPrivate %>
-    <%= render 'image_users/form' %>
-  <% end %>
-  <br>
-  <%= link_to 'Delete Image', @thisImage, method: :delete, data: {confirm: 'Do you really want to delete this Image?'} %>
-<% end %>
-</td>
-</tr>
-</table>
+      <table>
+        <h3>Tags</h3><hr>
+        <% @thisImage.tags.each do |tag| %>
+          <tr>
+          <% if !tag.new_record? %>
+            <td>
+            <div>"<%= tag.tag %>" </div>
+          </td>
+          <td>
+            <%= link_to 'Delete Tag', tag, method: :delete , data: {confirm: 'Do you really want to delete this tag?'} if @isOwner%>
+          </td>
+          <td>
+            <%= link_to 'Edit Tag', edit_tag_path(tag) if @isOwner%>
+          </td>
+        <% end %>
+        </tr>
+      <% end %>
+      </table>
+      <% if @isOwner %>
+        <h3>Create a Tag</h3>
+        <hr>
+        <%= render 'tags/form' %>
+        <br>
+        <h3>Change Image Settings</h3>
+        <hr>
+        <%= form_for @thisImage do |t| %>
+          <%= t.hidden_field(:isPrivate, :value => !@thisImage.isPrivate) %>
+        <% if @thisImage.isPrivate %>
+          <%= t.submit "Make Public"%>
+        <% else %>
+          <%= t.submit "Make Private"%>
+        <% end %>
+      <% end %>
+        <br>
+        <%= link_to 'Delete Image', @thisImage, method: :delete, data: {confirm: 'Do you really want to delete this Image?'} %>
+        <br>
+        <% if @thisImage.isPrivate %>
+        <h3>User's who have access</h3>
+        <hr>
+          <table>
+            <% @thisImage.image_users.each do |usr|%>
+              <tr>
+                <% if !usr.new_record? %>
+                  <% user = User.find(usr.user_id) %>
+                  <% iusr = ImageUser.find(usr.id) %>
+                  <td><%= "#{user.name} (#{user.email}) "%></td>
+                  <td><%= link_to 'Remove ImageUser', iusr, method: :delete, data: {confirm: 'Do you really want to remove this user?'}%></td>
+                <%end%>
+              </tr>
+            <% end %>
+            </table>
+          <% end %>
+            <% if @thisImage.isPrivate %>
+              <h3>Add Private Viewers</h3>
+              <hr>
+              <%= render 'image_users/form' %>
+          <% end %>
+          <% end %>
+          </td>
+        </tr>
+      </table>
